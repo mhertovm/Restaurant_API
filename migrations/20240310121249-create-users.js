@@ -12,12 +12,24 @@ module.exports = {
       username: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
+      },
+      age: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       phone: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true
+        }
       },
       password: {
         type: Sequelize.STRING,
@@ -26,6 +38,7 @@ module.exports = {
       role: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
