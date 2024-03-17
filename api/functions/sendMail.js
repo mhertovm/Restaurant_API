@@ -13,7 +13,7 @@ function sendmail(email, token) {
         from: process.env.EMAIL,
         to: email,
         subject: 'Sending Email using Node.js',
-        text: `for verify click here http://localhost:${port}/verify/${token}`
+        text: `for verify click here http://localhost:${port}/public/verify/${token}`
     };
     transporter.sendMail(mailOptions, function (error, info) {
 

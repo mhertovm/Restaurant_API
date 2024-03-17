@@ -1,7 +1,7 @@
 require('dotenv').config();
-const TOKEN_SECRET = process.env.TOKEN_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
-function generateAccessToken (username) {
-    return jwt.sign({ username }, TOKEN_SECRET, { expiresIn: "86400s" });
+function generateAccessToken (email, time) {
+    return jwt.sign({ email }, JWT_SECRET, { expiresIn: time? time : "86400s" });
 };
 module.exports = {generateAccessToken};
