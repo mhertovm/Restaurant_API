@@ -7,4 +7,7 @@ router.post('/addTable', adminController.addTable);
 router.patch('/updateCategory/:id', adminController.updateCategory);
 router.patch('/updateProduct/:id', adminController.updateProduct);
 router.patch('/updateTable/:id', adminController.updateTable);
+router.delete('/deleteCategory/:id', adminController.deleteCategory);
+router.delete('/deleteProduct/:id', adminController.deleteProduct);
+router.delete('/deleteTable/:id', adminController.deleteTable);
 module.exports = router;
