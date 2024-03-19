@@ -1,4 +1,6 @@
 const {Categories, Products, Tables} = require('../../models');
+const fs = require('fs');
+const uploadImage = require('../middlewares/upload');
 
 exports.addCategory = async (req, res)=>{
     const {name_am, name_en} = req.body;
@@ -20,6 +22,7 @@ exports.addCategory = async (req, res)=>{
 exports.addProduct = async (req, res)=> {
     const {category_id, name_am, name_en, description_am, description_en, price, quantity, discount, image} = req.body;
     try{
+        imageUrl = `/image/${image}`
         const product = await Products.create({
             category_id,
             name_am,
@@ -29,7 +32,7 @@ exports.addProduct = async (req, res)=> {
             price,
             quantity,
             discount,
-            image
+            image: imageUrl
         });
         res.status(201).json({
             message: "product added",
@@ -59,6 +62,22 @@ exports.addTable = async (req, res)=> {
         });
     };
 };
+exports.upload = (req, res)=> {
+    try{
+        if(!req.file){
+            throw {
+                status: 404,
+                message: "file not found"
+            }
+        }
+        res.status(200).json(req.file)
+    } catch(error){
+        res.status(error.status? error.status : 400).json({
+            message: "failed to upload file",
+            error: error.message
+        });
+    }
+}
 exports.updateCategory = async (req, res)=> {
     const id = req.params.id
     const {name_am, name_en} = req.body;
@@ -174,9 +193,29 @@ exports.deleteCategory = (req, res)=> {
         });
     };
 };
-exports.deleteProduct = (req, res)=> {
+exports.deleteProduct = async (req, res)=> {
     const id = req.params.id;
     try{
+        const product = await Products.findOne({
+            where: {id: id}
+        });
+        if(!product){
+            throw {
+                status: 404,
+                message: "product not found",
+            };
+        };
+        if(product.image){
+            const imagePath = `./api/public${product.image}`;
+            fs.unlink(imagePath, (error) => {
+                if (error) {
+                    throw {
+                        status: 400,
+                        message: "failed to delete product's image"
+                    }
+                }
+            });
+        };
         Products.destroy({
             where: {id: id}
         });
@@ -184,7 +223,7 @@ exports.deleteProduct = (req, res)=> {
             message: 'product deleted'
         });
     } catch(error){
-        res.status(400).json({
+        res.status(error.status? error.status : 400).json({
             message: 'failed to delete product',
             error: error.message
         });

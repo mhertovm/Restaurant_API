@@ -53,13 +53,13 @@ exports.login = async (req, res)=> {
 };
 exports.register = async (req, res)=> {
     const {name,surname,gender,age,phone,email,password} = req.body;
-    if(password.length < 8){
-        throw {
-            status: 400,
-            message: "Password less than 8 characters"
-        };
-    };
     try{
+        if(password.length < 8){
+            throw {
+                status: 400,
+                message: "Password less than 8 characters"
+            };
+        };
         const salt = await bcrypt.genSalt(10);
         const hashed_password = await bcrypt.hash(password, salt);
         const user =  await Users.create({
