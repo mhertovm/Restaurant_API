@@ -76,8 +76,8 @@ exports.upload = (req, res)=> {
             message: "failed to upload file",
             error: error.message
         });
-    }
-}
+    };
+};
 exports.updateCategory = async (req, res)=> {
     const id = req.params.id
     const {name_am, name_en} = req.body;
@@ -141,7 +141,6 @@ exports.updateProduct = async (req, res)=> {
             message: 'Product updated',
         });
     } catch(error){
-        console.log(error)
         res.status(error.status? error.status : 400).json({
             message: "failed to update product",
             error: error.message
