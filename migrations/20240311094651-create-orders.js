@@ -27,7 +27,8 @@ module.exports = {
       },
       quantity: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 1
       },
       buy: {
         type: Sequelize.BOOLEAN,

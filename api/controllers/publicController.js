@@ -1,4 +1,4 @@
-const {Users, Carts} = require('../../models');
+const {Users, Carts, Favorites, Orders, Reviews, Bookings} = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {generateAccessToken} = require('../functions/generateAccessToken');
@@ -8,8 +8,14 @@ exports.login = async (req, res)=> {
     const {email, password} = req.body;
     try{
         const user = await Users.findOne({
-            where: email,
-            include: Carts
+            where: {email: email},
+            include:[
+                {
+                model: Carts,
+                include: Orders
+                },
+                Favorites,
+            ]
         });
         if(!user) {
             throw {
@@ -17,6 +23,12 @@ exports.login = async (req, res)=> {
                 message: "User not found",
             };
         };
+        const orders = Object.values(user.Cart.Orders).filter((order) => {
+            if(order.buy !== false){
+                return false;
+            }
+            return true;
+        });
         const validPassword = await bcrypt.compare(password, user.password);
         if(validPassword && (user.role === 'user_verified' || 'admin')){
             const token = generateAccessToken(user.email);
@@ -31,7 +43,9 @@ exports.login = async (req, res)=> {
                 email: user.email,
                 role: user.role,
                 cart_id: user.Cart.id,
-                discount: user.Cart.discount
+                discount: user.Cart.discount,
+                orders: orders,
+                favorites: user.Favorites,
             });
         } else if(validPassword && user.role === 'user_not_verified'){
             throw {
@@ -49,6 +63,7 @@ exports.login = async (req, res)=> {
             message: "Login not successful",
             error: error.message
         });
+        console.log(error)
     };
 };
 exports.register = async (req, res)=> {
@@ -78,7 +93,7 @@ exports.register = async (req, res)=> {
         });
         const token = generateAccessToken(user.email, "180s");
         sendmail(user.email, token);
-        res.status(200).json({
+        res.status(201).json({
             message: "User successfully created",
         });
     } catch(error){

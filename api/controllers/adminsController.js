@@ -160,7 +160,7 @@ exports.updateTable = async (req, res)=> {
                 message: 'table not found'
             };
         }
-        await Tables.update(
+        Tables.update(
             {
                 table_number: table_number? table_number : table.table_number
             },

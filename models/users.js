@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Users.hasOne(models.Carts, {foreignKey: "user_id"});
-      Users.hasMany(models.Orders, {foreignKey: "user_id"});
       Users.hasMany(models.Favorites, {foreignKey: "user_id"});
       Users.hasMany(models.Bookings, {foreignKey: "user_id"});
       Users.hasMany(models.Reviews, {foreignKey: "user_id"});

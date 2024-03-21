@@ -48,13 +48,16 @@ exports.products = async (req, res)=> {
                 message: `product whose category: ${category}, name: ${name}, not founde`
             };
         };
-        let results
+        let results;
         if(from === undefined && to === undefined){
             results = search;
         } else{
-            results = search.slice(from-1, to < search.length? to : search.length-1)
+            results = search.slice(from-1, to < search.length? to : search.length-1);
         };
-        res.status(200).json(results);
+        res.status(200).json({
+            length: search.length,
+            results
+        });
     } catch(error){
         res.status(error.status? error.status : 400).json({
             message: "request has failed",
