@@ -17,7 +17,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   Bookings.init({
     user_id: DataTypes.INTEGER,
-    table_id: DataTypes.INTEGER
+    table_id: DataTypes.INTEGER,
+    fromYear: DataTypes.INTEGER,
+    fromMonth: DataTypes.INTEGER, 
+    fromDay: DataTypes.INTEGER, 
+    fromHour: DataTypes.INTEGER, 
+    toYear: DataTypes.INTEGER, 
+    toMonth: DataTypes.INTEGER, 
+    toDay: DataTypes.INTEGER, 
+    toHour: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Bookings',

@@ -7,7 +7,7 @@ const publicRoute = require('./api/routes/publicRoute');
 const adminsRoute = require('./api/routes/adminsRoute');
 app.use(cors());
 app.use(express.json());
-app.use('/api/public', express.static('public'));
+app.use('/public', express.static('./api/public'));
 app.use('/users', usersRoute);
 app.use('/products', productsRoute);
 app.use('/public', publicRoute);

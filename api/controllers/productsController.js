@@ -10,7 +10,6 @@ exports.oneProduct = async (req, res)=> {
         if(!product){
             throw {
                 status: 204,
-                message: 'product not founde'
             };
         };
         res.status(200).json(product);
@@ -22,7 +21,8 @@ exports.oneProduct = async (req, res)=> {
     };
 };
 exports.products = async (req, res)=> {
-    const {name, category, from, to} = req.query;
+    const {le, q, category, from, to} = req.query;
+    const name = `name_${le}` || `name_am`;
     try{
         const products = await Products.findAll({
             include: [Categories, Reviews],
@@ -30,14 +30,13 @@ exports.products = async (req, res)=> {
         if(!products){
             throw {
                 status: 204,
-                message: 'products not founde'
             };
         };
         const search = Object.values(products).filter(product =>{
-            if(category !== undefined && category !== product.Category.name_en){
+            if(category !== undefined && category !== product.Category[name]){
                 return false;
             };
-            if(name !== undefined && product.name_en.search(new RegExp(name, 'i')) === -1){
+            if(q !== undefined && product[name].search(new RegExp(q, 'i')) === -1){
                 return false;
             };
             return true
@@ -45,7 +44,6 @@ exports.products = async (req, res)=> {
         if(search.length === 0){
             throw {
                 status: 204,
-                message: `product whose category: ${category}, name: ${name}, not founde`
             };
         };
         let results;
@@ -71,7 +69,6 @@ exports.categories = async (req, res)=> {
         if(!categories){
             throw {
                 status: 204,
-                message: 'tables not found'
             };
         };
         res.status(200).json(categories);
@@ -88,7 +85,6 @@ exports.tables = async (req, res)=> {
         if(!tables){
             throw {
                 status: 204,
-                message: 'tables not found'
             };
         };
         res.status(200).json(tables);

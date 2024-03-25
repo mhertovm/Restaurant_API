@@ -25,6 +25,38 @@ module.exports = {
           key: 'id'
         }
       },
+      fromYear: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      fromMonth: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      fromDay: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      fromHour: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      toYear: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      toMonth: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      toDay: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      toHour: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

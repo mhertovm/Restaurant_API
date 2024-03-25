@@ -32,7 +32,7 @@ exports.addProduct = async (req, res)=> {
             price,
             quantity,
             discount,
-            image: imageUrl
+            image: imageUrl,
         });
         res.status(201).json({
             message: "product added",
