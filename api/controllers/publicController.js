@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {generateAccessToken} = require('../functions/generateAccessToken');
 const {sendmail} = require('../functions/sendMail');
+const logger = require('../logger/logger');
 
 exports.login = async (req, res)=> {
     const {email, password} = req.body;
@@ -37,6 +38,7 @@ exports.login = async (req, res)=> {
             };
         };
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "Login not successful",
             error: error.message
@@ -74,6 +76,7 @@ exports.register = async (req, res)=> {
             message: "User successfully created",
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "User not successful created",
             error: error.message
@@ -101,6 +104,7 @@ exports.verify = (req, res)=> {
             };
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "failed to verify",
             error: error.message

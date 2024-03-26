@@ -1,6 +1,7 @@
 const {Categories, Products, Tables} = require('../../models');
 const fs = require('fs');
 const uploadImage = require('../middlewares/upload');
+const logger = require('../logger/logger');
 
 exports.addCategory = async (req, res)=>{
     const {name_am, name_en} = req.body;
@@ -13,6 +14,7 @@ exports.addCategory = async (req, res)=>{
             category
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(400).json({
             message: "failed to add category",
             error: error.message
@@ -39,6 +41,7 @@ exports.addProduct = async (req, res)=> {
             product
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(400).json({
             message: "failed to add product",
             error: error.message
@@ -56,6 +59,7 @@ exports.addTable = async (req, res)=> {
             table
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(400).json({
             message: "failed to add table",
             error: error.message
@@ -72,6 +76,7 @@ exports.upload = (req, res)=> {
         }
         res.status(200).json(req.file)
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "failed to upload file",
             error: error.message
@@ -102,6 +107,7 @@ exports.updateCategory = async (req, res)=> {
             message: 'category updated',
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "failed to update category",
             error: error.message
@@ -141,6 +147,7 @@ exports.updateProduct = async (req, res)=> {
             message: 'Product updated',
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "failed to update product",
             error: error.message
@@ -170,6 +177,7 @@ exports.updateTable = async (req, res)=> {
             message: 'table updated',
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "failed to update table",
             error: error.message
@@ -186,6 +194,7 @@ exports.deleteCategory = (req, res)=> {
             message: 'category deleted',
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(400).json({
             message: "failed to delete category",
             error: error.message
@@ -222,6 +231,7 @@ exports.deleteProduct = async (req, res)=> {
             message: 'product deleted'
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: 'failed to delete product',
             error: error.message
@@ -238,6 +248,7 @@ exports.deleteTable = (req, res)=> {
             message: 'table deleted'
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(400).json({
             message: 'failed to delete table',
             error: error.message

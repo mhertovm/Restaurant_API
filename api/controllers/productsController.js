@@ -1,4 +1,5 @@
-const {Products, Categories, Tables, Reviews} = require('../../models')
+const {Products, Categories, Tables, Reviews} = require('../../models');
+const logger = require('../logger/logger');
 
 exports.oneProduct = async (req, res)=> {
     const id = req.params.id;
@@ -14,6 +15,7 @@ exports.oneProduct = async (req, res)=> {
         };
         res.status(200).json(product);
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "request has failed",
             error: error.message
@@ -57,6 +59,7 @@ exports.products = async (req, res)=> {
             results
         });
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "request has failed",
             error: error.message
@@ -73,6 +76,7 @@ exports.categories = async (req, res)=> {
         };
         res.status(200).json(categories);
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "reques has failed",
             error: error.message
@@ -89,6 +93,7 @@ exports.tables = async (req, res)=> {
         };
         res.status(200).json(tables);
     } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
         res.status(error.status? error.status : 400).json({
             message: "reques has failed",
             error: error.message
