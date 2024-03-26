@@ -59,6 +59,9 @@ To test the application
 ```
 Create the database tables
     npx sequelize-cli db:migrate
+Create index for emails
+    CREATE INDEX index_email
+    ON users (email);
 Create admin in MySql workbench example
     INSERT INTO Users (name, surname, gender, age, phone, email, password, role)
     VALUES ('', '', '', '', '', '', '', 'admin');
