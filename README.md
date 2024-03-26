@@ -20,7 +20,7 @@ npm install
 To test the application
 
 * In config folder create MySql database and choose a username and password for it
-* Create config.json file and add the database data as in the example
+* Create config folder and create config.json file and add the database data as in the example
 ```
     {
     "development": {
