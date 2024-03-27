@@ -1,2 +1,12 @@
-ERROR API request: /login, status: 401, error message: Invalid password
-ERROR API request: /login, status: 401, error message: Invalid password
+ERROR API request: /addTable, status: 400, error message: Validation error  Wed Mar 27 2024 20:23:47 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /addTable, status: 400, error message: Validation error  Wed Mar 27 2024 20:24:49 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteCategory/1, status: 400, error message: Cannot delete or update a parent row: a foreign key constraint fails (`restaurant`.`products`, CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`))  Wed Mar 27 2024 20:53:05 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteTable/1, status: 400, error message: Cannot delete or update a parent row: a foreign key constraint fails (`restaurant`.`bookings`, CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`table_id`) REFERENCES `tables` (`id`))  Wed Mar 27 2024 20:55:49 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/1, status: 400, error message: The "cb" argument must be of type function. Received undefined  Wed Mar 27 2024 20:59:27 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/6, status: 400, error message: The "cb" argument must be of type function. Received undefined  Wed Mar 27 2024 21:00:24 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/1, status: 400, error message: The "cb" argument must be of type function. Received undefined  Wed Mar 27 2024 21:01:28 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/1, status: 400, error message: The "cb" argument must be of type function. Received undefined  Wed Mar 27 2024 21:01:30 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/7, status: 400, error message: The "cb" argument must be of type function. Received undefined  Wed Mar 27 2024 21:02:11 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/7, status: 400, error message: The "cb" argument must be of type function. Received undefined  Wed Mar 27 2024 21:02:14 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/7, status: 404, error message: product not found  Wed Mar 27 2024 21:03:16 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)
+ERROR API request: /deleteProduct/1, status: 400, error message: Cannot delete or update a parent row: a foreign key constraint fails (`restaurant`.`favorites`, CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`))  Wed Mar 27 2024 21:03:49 GMT+0400 (Հայաստանի ստանդարտ ժամանակ)

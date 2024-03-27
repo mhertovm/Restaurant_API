@@ -463,6 +463,18 @@ exports.updateBooking = async (req, res)=> {
     try{
         const from = Date.UTC(fromYear, fromMonth, fromDay, fromHour);
         const to = Date.UTC(toYear, toMonth, toDay, toHour);
+        const date = new Date();
+        const now_utc = Date.UTC(
+            date.getUTCFullYear(), 
+            date.getUTCMonth(),
+            date.getUTCDate(), 
+            date.getUTCHours()
+        );
+        if((to - from) < 3600000 || (to - from) > 24 * 36000000 || from < now_utc){
+            throw {
+                message: "less than 1 and more than 24 hour and in past tense cannot be booked"
+            };
+        };
         const booking = await Bookings.findOne({
             where: {id: id}
         });

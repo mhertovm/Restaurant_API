@@ -22,6 +22,7 @@ body: {
     "message": "User successfully created"
 }
 ```
+
 ## Login
 
 * URL: /public/login
@@ -42,6 +43,7 @@ body: {
     "role": "_"
 }
 ```
+
 ## Products
 
 * URL: /products
@@ -97,6 +99,7 @@ GET /products?category=_&q=_&from=_&to=_&le=_
     ]
 }
 ```
+
 ## Product
 
 * URL: /products/product/:id
@@ -109,38 +112,39 @@ GET /products/product/_
 ### Example Response:
 ```
 {
+    "id": _,
+    "category_id": _,
+    "name_am": "_",
+    "name_en": "_",
+    "description_am": "_",
+    "description_en": "_",
+    "price": _,
+    "quantity": _,
+    "discount": _,
+    "image": "_",
+    "createdAt": "_",
+    "updatedAt": "_",
+    "Category": {
+        "id": _,
+        "name_am": "_",
+        "name_en": "_",
+        "createdAt": "_",
+        "updatedAt": "_"
+    },
+    "Reviews": [
+        {
             "id": _,
-            "category_id": _,
-            "name_am": "_",
-            "name_en": "_",
-            "description_am": "_",
-            "description_en": "_",
-            "price": _,
-            "quantity": _,
-            "discount": _,
-            "image": "_",
+            "user_id": _,
+            "product_id": _,
+            "rating": _,
+            "comment": "_",
             "createdAt": "_",
-            "updatedAt": "_",
-            "Category": {
-                "id": _,
-                "name_am": "_",
-                "name_en": "_",
-                "createdAt": "_",
-                "updatedAt": "_"
-            },
-            "Reviews": [
-                {
-                    "id": _,
-                    "user_id": _,
-                    "product_id": _,
-                    "rating": _,
-                    "comment": "_",
-                    "createdAt": "_",
-                    "updatedAt": "_"
-                },
-            ]
+            "updatedAt": "_"
         },
+    ]
+},
 ```
+
 ## Categories
 
 * URL: /products/categories
@@ -162,6 +166,7 @@ GET /products/categories
     },
 ]
 ```
+
 ## Tables
 
 * URL: /products/tables
@@ -182,6 +187,7 @@ GET /products/tables
     },
 ]
 ```
+
 ## Images
 
 * URL: /public/image-name
@@ -194,4 +200,253 @@ GET /public/image-name
 ### Example Response:
 ```
     image.png
+```
+
+## Add Category
+
+* URL: /admins/addCategory
+* Method: POST
+
+### Example Request:
+```
+POST /admins/addCategory
+authorization: jwt
+body: {
+    "name_am":"_",
+    "name_en":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "category added",
+    "category": {
+        "id": _,
+        "name_am": "_",
+        "name_en": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Upload
+
+* URL: /admins/upload
+* Method: POST
+
+### Example Request:
+```
+POST /admins/upload
+authorization: jwt
+form-data: {
+    image: _
+}
+```
+### Example Response:
+```
+{
+    "fieldname": "_",
+    "originalname": "_",
+    "encoding": "_",
+    "mimetype": "_",
+    "destination": "_",
+    "filename": "_",
+    "path": "_",
+    "size": _
+}
+```
+
+## Add Product
+
+* URL: /admins/addProduct
+* Method: POST
+
+### Example Request:
+```
+POST /admins/addProduct
+authorization: jwt
+body: {
+    "category_id":"_",
+    "name_am":"_",
+    "name_en":"_",
+    "description_am":"_",
+    "description_en":"_",
+    "price":"_",
+    "quantity":"_",
+    "discount":"_",
+    "image":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "product added",
+    "product": {
+        "id": _,
+        "category_id": "_",
+        "name_am": "_",
+        "name_en": "_",
+        "description_am": "_",
+        "description_en": "_",
+        "price": "_",
+        "quantity": "_",
+        "discount": "_",
+        "image": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Add Table
+
+* URL: /admins/addTable
+* Method: POST
+
+### Example Request:
+```
+POST /admins/addTable
+authorization: jwt
+body: {
+    "table_number":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "table added",
+    "table": {
+        "id": _,
+        "table_number": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Update Category
+
+* URL: /admins/updateCategory/:id
+* Method: PATCH
+
+### Example Request:
+```
+PATCH /admins/updateCategory/_
+authorization: jwt
+body: {
+    "name_am":"_",
+    "name_en":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "category updated",
+    "categoryUpdate: [1]
+}
+```
+
+## Update Product
+
+* URL: /admins/updateProduct/:id
+* Method: PATCH
+
+### Example Request:
+```
+PATCH /admins/updateProduct/_
+authorization: jwt
+body: {
+    "category_id":"_",
+    "name_am":"_",
+    "name_en":"_",
+    "description_am":"_",
+    "description_en":"_",
+    "price":"_",
+    "quantity":"_",
+    "discount":"_",
+    "image":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "product updated",
+    "productUpdate: [1]
+}
+```
+
+## Update Table
+
+* URL: /admins/updateTable/:id
+* Method: PATCH
+
+### Example Request:
+```
+PATCH /admins/updateTable/_
+authorization: jwt
+body: {
+    "table_number":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "table updated",
+    "tableUpdate: [1]
+}
+```
+
+## Delete Category
+
+* URL: /admins/deleteCategory/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /admins/deleteCategory/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "category deleted",
+    "categoryDelete: [1]
+}
+```
+
+## Delete Product
+
+* URL: /admins/deleteProduct/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /admins/deleteProduct/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "product deleted",
+    "productDelete: [1]
+}
+```
+
+## Delete Table
+
+* URL: /admins/deleteTable/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /admins/deleteTable/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "table deleted",
+    "tableDelete: [1]
+}
 ```

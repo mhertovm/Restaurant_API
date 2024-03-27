@@ -96,7 +96,7 @@ exports.updateCategory = async (req, res)=> {
                 message: "category not found",
             };
         };
-        Categories.update(
+        const categoryUpdate = await Categories.update(
             {
                 name_am: name_am? name_am : category.name_am,
                 name_en: name_en? name_en : category.name_en
@@ -105,6 +105,7 @@ exports.updateCategory = async (req, res)=> {
         );
         res.status(200).json({
             message: 'category updated',
+            categoryUpdate
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -127,7 +128,7 @@ exports.updateProduct = async (req, res)=> {
                 message: "product not found",
             };
         };
-        Products.update(
+        const productUpdate = await Products.update(
             {
                 category_id: category_id? category_id : product.category_id,
                 name_am: name_am? name_am : product.name_am,
@@ -145,6 +146,7 @@ exports.updateProduct = async (req, res)=> {
         );
         res.status(200).json({
             message: 'Product updated',
+            productUpdate
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -167,7 +169,7 @@ exports.updateTable = async (req, res)=> {
                 message: 'table not found'
             };
         }
-        Tables.update(
+        const tableUpdate = await Tables.update(
             {
                 table_number: table_number? table_number : table.table_number
             },
@@ -175,6 +177,7 @@ exports.updateTable = async (req, res)=> {
         );
         res.status(200).json({
             message: 'table updated',
+            tableUpdate
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -184,14 +187,15 @@ exports.updateTable = async (req, res)=> {
         });
     };
 };
-exports.deleteCategory = (req, res)=> {
+exports.deleteCategory = async (req, res)=> {
     const id = req.params.id;
     try{
-        Categories.destroy({
+        const categoryDelete = await Categories.destroy({
             where: {id: id}
         });
         res.status(200).json({
             message: 'category deleted',
+            categoryDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -215,20 +219,16 @@ exports.deleteProduct = async (req, res)=> {
         };
         if(product.image){
             const imagePath = `./api/public${product.image}`;
-            fs.unlink(imagePath, (error) => {
-                if (error) {
-                    throw {
-                        status: 400,
-                        message: "failed to delete product's image"
-                    }
-                }
+            fs.unlink(imagePath, (error)=>{
+                console.log(error)
             });
         };
-        Products.destroy({
+        const productDelete = await Products.destroy({
             where: {id: id}
         });
         res.status(200).json({
-            message: 'product deleted'
+            message: 'product deleted',
+            productDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -238,14 +238,15 @@ exports.deleteProduct = async (req, res)=> {
         });
     };
 };
-exports.deleteTable = (req, res)=> {
+exports.deleteTable = async (req, res)=> {
     const id = req.params.id;
     try{
-        Tables.destroy({
+        const tableDelete = await Tables.destroy({
             where: {id: id}
         });
         res.status(200).json({
-            message: 'table deleted'
+            message: 'table deleted',
+            tableDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
