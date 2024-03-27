@@ -498,21 +498,22 @@ exports.updateBooking = async (req, res)=> {
                 };
             };
         });
-        Bookings.update(
+        const bookingUpdate = await Bookings.update(
             {
-                Year: fromYear, 
-                Month: fromMonth, 
-                Day: fromDay, 
-                Hour: fromHour, 
-                Year: toYear, 
-                Month: toMonth, 
-                Day: toDay, 
-                Hour: toHour
+                fromYear, 
+                fromMonth, 
+                fromDay, 
+                fromHour, 
+                toYear, 
+                toMonth, 
+                toDay, 
+                toHour
             },
             {where: {id: id}}
         );
         res.status(200).json({
-            message: 'order updated',
+            message: 'booking updated',
+            bookingUpdate
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -542,7 +543,7 @@ exports.updateReview = async (req, res)=> {
                 message: 'review not found'
             };
         };
-        Reviews.update(
+        const reviewUpdate = await Reviews.update(
             {
                 rating: rating? Math.floor(rating) : reaview.rating,
                 comment: comment? comment : reaview.comment
@@ -551,6 +552,7 @@ exports.updateReview = async (req, res)=> {
         );
         res.status(200).json({
             message: 'order updated',
+            reviewUpdate
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -560,17 +562,24 @@ exports.updateReview = async (req, res)=> {
         });
     };
 }
-exports.deleteOrder = (req, res)=> {
+exports.deleteOrder = async (req, res)=> {
     const id = req.params.id;
     try{
-        Orders.destroy({
+        const orderDelete = await Orders.destroy({
             where: {
                 id: id,
                 buy: false
             }
         });
+        if(orderDelete === 0){
+            throw {
+                status: 404,
+                message: "order note found"
+            };
+        };
         res.status(200).json({
-            message: 'order deleted'
+            message: 'order deleted',
+            orderDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -580,16 +589,23 @@ exports.deleteOrder = (req, res)=> {
         });
     };
 };
-exports.deleteBooking = (req, res)=> {
+exports.deleteBooking = async (req, res)=> {
     const id = req.params.id;
     try{
-        Bookings.destroy({
+        const bookingDelete = await Bookings.destroy({
             where: {
                 id: id,
             }
         });
+        if(bookingDelete === 0){
+            throw {
+                status: 404,
+                message: "booking note found"
+            };
+        };
         res.status(200).json({
-            message: 'booking deleted'
+            message: 'booking deleted',
+            bookingDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -602,13 +618,20 @@ exports.deleteBooking = (req, res)=> {
 exports.deleteFavorite = async (req, res)=> {
     const id = req.params.id;
     try{
-        Favorites.destroy({
+        const favoriteDelete = await Favorites.destroy({
             where: {
                 id: id,
             }
         });
+        if(favoriteDelete === 0){
+            throw {
+                status: 404,
+                message: "favorite note found"
+            };
+        };
         res.status(200).json({
-            message: 'favorite deleted'
+            message: 'favorite deleted',
+            favoriteDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);
@@ -621,13 +644,20 @@ exports.deleteFavorite = async (req, res)=> {
 exports.deleteReview = async (req, res)=> {
     const id = req.params.id;
     try{
-        Reviews.destroy({
+        const reviewDelete = await Reviews.destroy({
             where: {
                 id: id,
             }
         });
+        if(reviewDelete === 0){
+            throw {
+                status: 404,
+                message: "review note found"
+            };
+        };
         res.status(200).json({
-            message: 'reviews deleted'
+            message: 'reviews deleted',
+            reviewDelete
         });
     } catch(error){
         logger(req.url, error.status? error.status: 400, error);

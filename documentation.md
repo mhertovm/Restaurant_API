@@ -450,3 +450,460 @@ authorization: jwt
     "tableDelete: [1]
 }
 ```
+
+## User
+
+* URL: /users/user
+* Method: GET
+
+### Example Request:
+```
+GET /users/user
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "id": _,
+    "name": "_",
+    "surname": "_",
+    "gender": "_",
+    "age": _,
+    "phone": _,
+    "email": "_",
+    "role": "_",
+    "cart_id": _,
+    "discount": _,
+    "orders": [
+        {
+            "id": _,
+            "cart_id": _,
+            "product_id": _,
+            "quantity": _,
+            "buy": _,
+            "createdAt": "_",
+            "updatedAt": "_"
+        },
+        {
+            "id": _,
+            "cart_id": _,
+            "product_id": _,
+            "quantity": _,
+            "buy": false,
+            "createdAt": "_",
+            "updatedAt": "_"
+        }
+    ],
+    "favorites": [
+        {
+            "id": _,
+            "user_id": _,
+            "product_id": _,
+            "createdAt": "_",
+            "updatedAt": "_"
+        }
+    ]
+}
+```
+
+## Orders
+
+* URL: /users/orders
+* Method: GET
+
+### Example Request:
+```
+GET /users/orders
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "orders": [
+        {
+            "id": _,
+            "cart_id": _,
+            "product_id": _,
+            "quantity": _,
+            "buy": _,
+            "createdAt": "_",
+            "updatedAt": "_"
+        },
+    ]
+}
+```
+
+## OrdersBought
+
+* URL: /users/ordersBought
+* Method: GET
+
+### Example Request:
+```
+GET /users/ordersBought
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "ordersBought": [
+        {
+            "id": _,
+            "cart_id": _,
+            "product_id": _,
+            "quantity": _,
+            "buy": _,
+            "createdAt": "_",
+            "updatedAt": "_"
+        },
+    ]
+}
+```
+
+## Bookings
+
+* URL: /users/bookings
+* Method: GET
+
+### Example Request:
+```
+GET /users/bookings
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "bookings": [
+        {
+            "id": _,
+            "user_id": _,
+            "table_id": _,
+            "fromYear": _,
+            "fromMonth": _,
+            "fromDay": _,
+            "fromHour": _,
+            "toYear": _,
+            "toMonth": _,
+            "toDay": _,
+            "toHour": _,
+            "createdAt": "_",
+            "updatedAt": "_"
+        },
+    ]
+}
+```
+
+## Favorites
+
+* URL: /users/favorites
+* Method: GET
+
+### Example Request:
+```
+GET /users/favorites
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "favorites": [
+        {
+            "id": _,
+            "user_id": _,
+            "product_id": _,
+            "createdAt": "_",
+            "updatedAt": "_"
+        }
+    ]
+}
+```
+
+## Payment
+
+* URL: /users/payment/:id
+* Method: GET
+
+### Example Request:
+```
+GET /users/payment/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "order has been paid"
+}
+```
+
+## Add Order
+
+* URL: /users/addOrder
+* Method: POST
+
+### Example Request:
+```
+POST /users/addOrder
+authorization: jwt
+body: {
+    "product_id":"_",
+    "quantity": "_"
+}
+```
+### Example Response:
+```
+{
+    "message": "order added",
+    "addOrder": {
+        "id": _,
+        "cart_id": _,
+        "product_id": "_",
+        "quantity": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Add Booking
+
+* URL: /users/addBooking
+* Method: POST
+
+### Example Request:
+```
+POST /users/addBooking
+authorization: jwt
+body: {
+    "table_id":"_",
+    "fromYear":"_",
+    "fromMonth":"_", 
+    "fromDay":"_", 
+    "fromHour":"_", 
+    "toYear":"_", 
+    "toMonth":"_", 
+    "toDay":"_", 
+    "toHour":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "order added",
+    "addBooking": {
+        "id": _,
+        "user_id": _,
+        "table_id": "_",
+        "fromYear": "_",
+        "fromMonth": "_",
+        "fromDay": "_",
+        "fromHour": "_",
+        "toYear": "_",
+        "toMonth": "_",
+        "toDay": "_",
+        "toHour": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Add Favorite
+
+* URL: /users/addFavorite
+* Method: POST
+
+### Example Request:
+```
+POST /users/addFavorite
+authorization: jwt
+body: {
+    "product_id":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "favorite added",
+    "addFavorite": {
+        "id": _,
+        "user_id": _,
+        "product_id": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Add Review
+
+* URL: /users/addReview
+* Method: POST
+
+### Example Request:
+```
+POST /users/addReview
+authorization: jwt
+body: {
+    "rating":"_",
+    "comment":"_",
+    "product_id":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "reviews added",
+    "addReview": {
+        "id": _,
+        "user_id": _,
+        "product_id": "_",
+        "rating": _,
+        "comment": "_",
+        "updatedAt": "_",
+        "createdAt": "_"
+    }
+}
+```
+
+## Update Booking
+
+* URL: /users/updateBooking/:id
+* Method: PUT
+
+### Example Request:
+```
+PUT /users/updateBooking/_
+authorization: jwt
+body: {
+    "fromYear":"_",
+    "fromMonth":"_", 
+    "fromDay":"_", 
+    "fromHour":"_", 
+    "toYear":"_", 
+    "toMonth":"_", 
+    "toDay":"_", 
+    "toHour":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "booking updated",
+    "bookingUpdate": [1]
+}
+```
+
+## Update Order
+
+* URL: /users/updateOrder/:id
+* Method: PATCH
+
+### Example Request:
+```
+PATCH /users/updateOrder/_
+authorization: jwt
+body: {
+    "quantity":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "order updated",
+    "orderUpdate": [1]
+}
+```
+
+## Update Review
+
+* URL: /users/updateReview/:id
+* Method: PATCH
+
+### Example Request:
+```
+PATCH /users/updateReview/_
+authorization: jwt
+body: {
+    "comment":"_",
+    "rating":"_"
+}
+```
+### Example Response:
+```
+{
+    "message": "review updated",
+    "reviewUpdate": [1]
+}
+```
+
+## Delet Order
+
+* URL: /users/deleteOrder/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /users/deleteOrder/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "order deleted",
+    "orderDelete": 1
+}
+```
+
+## Delet Booking
+
+* URL: /users/deleteBooking/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /users/deleteBooking/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "Booking deleted",
+    "deleteBooking": 1
+}
+```
+
+## Delet Favorite
+
+* URL: /users/deleteFavorite/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /users/deleteFavorite/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "Favorite deleted",
+    "deleteFavorite": 1
+}
+```
+
+## Delet Review
+
+* URL: /users/deleteReview/:id
+* Method: DELETE
+
+### Example Request:
+```
+DELETE /users/deleteReview/_
+authorization: jwt
+```
+### Example Response:
+```
+{
+    "message": "Review deleted",
+    "deleteReview": 1
+}
+```
