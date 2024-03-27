@@ -4,7 +4,7 @@
 * Method: POST
 
 ### Example Request:
-
+```
 POST /public/register
 body: {
     "name":"",
@@ -15,9 +15,10 @@ body: {
     "email":"",
     "password":""
 }
-
+```
 ### Example Response:
-
+```
 {
     "message": "User successfully created"
 }
+```
