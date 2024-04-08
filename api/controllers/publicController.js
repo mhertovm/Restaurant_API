@@ -26,6 +26,7 @@ exports.login = async (req, res)=> {
             });
         } else if(validPassword && user.role === 'user_not_verified'){
             const token = generateAccessToken(user.email, "180s");
+            console.log(token);
             sendmail(user.email, token);
             res.status(200).json({
                 message: "the token is addressed to the email",

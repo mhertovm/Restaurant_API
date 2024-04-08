@@ -1,4 +1,4 @@
-const {Users, Carts, Favorites, Orders, Reviews, Bookings} = require('../../models');
+const {Users, Carts, Favorites, Orders, Reviews, Bookings, Tables} = require('../../models');
 const jwt = require('jsonwebtoken');
 const logger = require('../logger/logger');
 
@@ -193,6 +193,51 @@ exports.reviews = async (req, res)=> {
         });
     };
 };
+exports.tables = async (req, res)=> {
+    const {fromYear, fromMonth, fromDay, fromHour, toYear, toMonth, toDay, toHour} = req.body;
+    try{
+        const freeTable = [];
+        const bookings = await Bookings.findAll({
+            include: Tables
+        });
+        const tables = await Tables.findAll({
+            include: Bookings
+        });
+        if(tables.Bookings == []){
+            freeTable.push(tables.table_number);
+        }
+        const from = Date.UTC(fromYear, fromMonth, fromDay, fromHour);
+        const to = Date.UTC(toYear, toMonth, toDay, toHour);
+        const search = bookings.filter((booking)=>{
+            const fromBusy = Date.UTC(booking.fromYear, booking.fromMonth, booking.fromDay, booking.fromHour);
+            const toBusy = Date.UTC(booking.toYear, booking.toMonth, booking.toDay, booking.toHour);
+            if(fromBusy <= from && from < toBusy || fromBusy < to && to <= toBusy){
+                return false;
+            };
+            return true;
+        });
+        search.reduce((aggr, val)=>{
+            if(aggr[val.Table.table_number] === undefined){
+                freeTable.push(val.Table.table_number);
+            };
+            return aggr;
+        }, {});
+        if(!search){
+            throw {
+                status: 204
+            };
+        };
+        res.status(200).json({
+            "tables number": freeTable
+        })
+    } catch(error){
+        logger(req.url, error.status? error.status: 400, error);
+        res.status(error.status? error.status : 400).json({
+            message: "failed to request",
+            error: error.message
+        });
+    };
+}
 exports.addOrder = async (req, res)=> {
     const token = req.headers.authorization;
     const decoded = jwt.decode(token);

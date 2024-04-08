@@ -7,6 +7,7 @@ router.get('/ordersBought', usersController.ordersBought);
 router.get('/bookings', usersController.bookings);
 router.get('/favorites', usersController.favorites);
 router.get('/payment/:id', usersController.payment);
+router.get('/tables', usersController.tables);
 router.post('/addOrder', usersController.addOrder);
 router.post('/addBooking', usersController.addBooking);
 router.post('/addFavorite', usersController.addFavorite);
